@@ -51,7 +51,13 @@ var _ = Describe("PredictiveHPA Controller", func() {
 						Name:      resourceName,
 						Namespace: "default",
 					},
-					// TODO(user): Specify other spec details if needed.
+					Spec: autoscalingv1alpha1.PredictiveHPASpec{
+						MaxReplicas:      5,
+						MetricsQuery:     "mock_query",
+						PrometheusURL:    "http://mock-prometheus",
+						PredictorAddress: "mock-address",
+						IntervalSeconds:  60,
+					},
 				}
 				Expect(k8sClient.Create(ctx, resource)).To(Succeed())
 			}
