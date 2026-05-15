@@ -9,17 +9,20 @@ on:
 jobs:
   go-tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./operator
     steps:
       - uses: actions/checkout@v4
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version-file: 'operator/go.mod'
+          go-version: '1.25'
           cache-dependency-path: 'operator/go.sum'
       - name: Build
-        run: cd operator && go build ./...
+        run: go build ./...
       - name: Test
-        run: cd operator && make test
+        run: make test
 
   python-tests:
     runs-on: ubuntu-latest
