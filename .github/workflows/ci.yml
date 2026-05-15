@@ -21,6 +21,8 @@ jobs:
           cache-dependency-path: 'operator/go.sum'
       - name: Build
         run: go build ./...
+      - name: Lint
+        run: make lint
       - name: Test
         run: make test
 
