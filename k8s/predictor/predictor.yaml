@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: predictor
+  namespace: system
+  labels:
+    control-plane: predictor
+spec:
+  selector:
+    matchLabels:
+      control-plane: predictor
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: predictor
+      labels:
+        control-plane: predictor
+    spec:
+      containers:
+      - name: predictor
+        image: predictor:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 50051
+          name: grpc
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: predictor-service
+  namespace: system
+spec:
+  selector:
+    control-plane: predictor
+  ports:
+  - port: 50051
+    targetPort: 50051
+    name: grpc

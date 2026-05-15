@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package predictor;
+
+option go_package = "github.com/kust1q/predictive-hpa-operator/api/v1alpha1/predictor";
+
+service Predictor {
+  rpc Predict (PredictionRequest) returns (PredictionResponse) {}
+}
+
+message DataPoint {
+  int64 timestamp = 1;
+  double value = 2;
+}
+
+message PredictionRequest {
+  repeated DataPoint data_points = 1;
+  int32 forecast_horizon_seconds = 2;
+}
+
+message PredictionResponse {
+  int32 predicted_replicas = 1;
+}

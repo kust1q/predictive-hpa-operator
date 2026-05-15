@@ -28,5 +28,28 @@ go.work.sum
 .env
 
 # Editor/IDE
-# .idea/
-# .vscode/
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Kubebuilder / Go Operator
+bin/
+dist/
+operator/bin/
+operator/dist/
+
+# Python / Predictor
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+venv/
+env/
+.env
+.coverage
+coverage.xml
+htmlcov/
+
+# Logs
+*.log

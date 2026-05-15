@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  operator:
+    build:
+      context: ./operator
+      dockerfile: Dockerfile
+    environment:
+      - METRICS_ADDR=:8080
+      - PROBE_ADDR=:8081
+    # Note: In a real K8s env, this would need a kubeconfig or service account.
+    # For local testing, we might need to mount ~/.kube/config.
+
+  predictor:
+    build:
+      context: .
+      dockerfile: predictor/Dockerfile
+    ports:
+      - "50051:50051"
+    environment:
+      - PORT=50051

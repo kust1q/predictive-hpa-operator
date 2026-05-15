@@ -1,0 +1,18 @@
+apiVersion: autoscaling.predictive-hpa.io/v1alpha1
+kind: PredictiveHPA
+metadata:
+  labels:
+    app.kubernetes.io/name: predictive-hpa-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: predictivehpa-sample
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: test-app
+  minReplicas: 1
+  maxReplicas: 10
+  metricsQuery: "sum(rate(container_cpu_usage_seconds_total{container='test-app'}[1m]))"
+  prometheusURL: "http://prometheus-server.prometheus.svc.cluster.local"
+  predictorAddress: "predictive-hpa-operator-predictor-service.predictive-hpa-operator-system.svc.cluster.local:50051"
+  intervalSeconds: 60
