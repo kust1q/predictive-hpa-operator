@@ -14,11 +14,12 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.25'
+          go-version-file: 'operator/go.mod'
+          cache-dependency-path: 'operator/go.sum'
       - name: Build
         run: cd operator && go build ./...
       - name: Test
-        run: cd operator && go test ./...
+        run: cd operator && make test
 
   python-tests:
     runs-on: ubuntu-latest
