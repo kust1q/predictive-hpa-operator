@@ -44,25 +44,31 @@ spec:
                 description: IntervalSeconds is the interval in seconds between prediction
                   cycles.
                 format: int32
+                minimum: 10
                 type: integer
               maxReplicas:
                 description: MaxReplicas is the upper limit for the number of replicas.
                 format: int32
+                minimum: 1
                 type: integer
               metricsQuery:
                 description: MetricsQuery is the Prometheus query used to fetch historical
                   metrics.
+                minLength: 1
                 type: string
               minReplicas:
                 description: MinReplicas is the lower limit for the number of replicas.
                 format: int32
+                minimum: 1
                 type: integer
               predictorAddress:
                 description: PredictorAddress is the gRPC address of the Python ML
                   service.
+                minLength: 1
                 type: string
               prometheusURL:
                 description: PrometheusURL is the URL of the Prometheus server.
+                pattern: ^https?://.*
                 type: string
               scaleTargetRef:
                 description: ScaleTargetRef points to the target resource to scale.

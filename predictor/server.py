@@ -28,7 +28,7 @@ class PredictorServicer(predictor_pb2_grpc.PredictorServicer):
             m = Prophet(yearly_seasonality=False, weekly_seasonality=False, daily_seasonality=True)
             m.fit(df)
             
-            future = m.make_future_dataframe(periods=1, freq=f'{request.forecast_horizon_seconds}s', include_history=False)
+            future = m.make_future_dataframe(periods=1, freq=f'{request.forecast_horizon_seconds}S', include_history=False)
             
             forecast = m.predict(future)
             

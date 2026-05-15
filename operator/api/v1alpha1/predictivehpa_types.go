@@ -30,22 +30,28 @@ type PredictiveHPASpec struct {
 	ScaleTargetRef autoscalingv1.CrossVersionObjectReference `json:"scaleTargetRef"`
 
 	// MinReplicas is the lower limit for the number of replicas.
+	// +kubebuilder:validation:Minimum=1
 	// +optional
 	MinReplicas *int32 `json:"minReplicas,omitempty"`
 
 	// MaxReplicas is the upper limit for the number of replicas.
+	// +kubebuilder:validation:Minimum=1
 	MaxReplicas int32 `json:"maxReplicas"`
 
 	// MetricsQuery is the Prometheus query used to fetch historical metrics.
+	// +kubebuilder:validation:MinLength=1
 	MetricsQuery string `json:"metricsQuery"`
 
 	// PrometheusURL is the URL of the Prometheus server.
+	// +kubebuilder:validation:Pattern=`^https?://.*`
 	PrometheusURL string `json:"prometheusURL"`
 
 	// PredictorAddress is the gRPC address of the Python ML service.
+	// +kubebuilder:validation:MinLength=1
 	PredictorAddress string `json:"predictorAddress"`
 
 	// IntervalSeconds is the interval in seconds between prediction cycles.
+	// +kubebuilder:validation:Minimum=10
 	// +optional
 	// +kubebuilder:default=60
 	IntervalSeconds int32 `json:"intervalSeconds,omitempty"`
