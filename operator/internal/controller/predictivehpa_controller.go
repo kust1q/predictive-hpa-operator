@@ -41,6 +41,12 @@ import (
 	pb "github.com/kust1q/predictive-hpa-operator/api/v1alpha1/predictor"
 )
 
+const (
+	timeoutPrometheusQuery = 10 * time.Second
+	timeoutPredictorCall   = 10 * time.Second
+	requeueAfterError      = 30 * time.Second
+)
+
 type metricsProvider interface {
 	queryPrometheus(ctx context.Context, phpa *autoscalingv1alpha1.PredictiveHPA) ([]*pb.DataPoint, error)
 }
@@ -68,7 +74,7 @@ func (d *defaultMetricsProvider) queryPrometheus(ctx context.Context, phpa *auto
 	}
 
 	v1api := v1.NewAPI(apiClient)
-	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	ctx, cancel := context.WithTimeout(ctx, timeoutPrometheusQuery)
 	defer cancel()
 
 	end := time.Now()
@@ -109,7 +115,7 @@ func (d *defaultPredictorClient) callPredictor(ctx context.Context, phpa *autosc
 	defer func() { _ = conn.Close() }()
 
 	grpcClient := pb.NewPredictorClient(conn)
-	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	ctx, cancel := context.WithTimeout(ctx, timeoutPredictorCall)
 	defer cancel()
 
 	resp, err := grpcClient.Predict(ctx, &pb.PredictionRequest{
@@ -147,13 +153,13 @@ func (r *PredictiveHPAReconciler) Reconcile(ctx context.Context, req ctrl.Reques
 	dataPoints, err := r.metricsProvider.queryPrometheus(ctx, phpa)
 	if err != nil {
 		log.Error(err, "Failed to query Prometheus")
-		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
+		return ctrl.Result{RequeueAfter: requeueAfterError}, nil
 	}
 
 	predictedReplicas, err := r.predictorClient.callPredictor(ctx, phpa, dataPoints)
 	if err != nil {
 		log.Error(err, "Failed to call predictor service")
-		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
+		return ctrl.Result{RequeueAfter: requeueAfterError}, nil
 	}
 
 	desiredReplicas := predictedReplicas
@@ -169,7 +175,7 @@ func (r *PredictiveHPAReconciler) Reconcile(ctx context.Context, req ctrl.Reques
 	err = r.Get(ctx, types.NamespacedName{Namespace: phpa.Namespace, Name: targetName}, deployment)
 	if err != nil {
 		log.Error(err, "Failed to get target Deployment", "name", targetName)
-		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
+		return ctrl.Result{RequeueAfter: requeueAfterError}, nil
 	}
 
 	currentReplicas := *deployment.Spec.Replicas

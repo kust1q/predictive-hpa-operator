@@ -50,7 +50,7 @@ func main() {
 		},
 		HealthProbeBindAddress: cfg.ProbeAddr,
 		LeaderElection:         cfg.EnableLeaderElection,
-		LeaderElectionID:       "b920b44e.predictive-hpa.io",
+		LeaderElectionID:       cfg.LeaderElectionID,
 	})
 	if err != nil {
 		logrus.WithError(err).Fatal("unable to start manager")

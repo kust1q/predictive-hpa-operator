@@ -9,6 +9,7 @@ type Config struct {
 	MetricsAddr          string
 	ProbeAddr            string
 	EnableLeaderElection bool
+	LeaderElectionID     string
 }
 
 var cfg *Config
@@ -18,6 +19,7 @@ func InitConfig() error {
 		MetricsAddr:          getEnv("METRICS_ADDR", ":8080"),
 		ProbeAddr:            getEnv("PROBE_ADDR", ":8081"),
 		EnableLeaderElection: getEnvBool("ENABLE_LEADER_ELECTION", false),
+		LeaderElectionID:     getEnv("LEADER_ELECTION_ID", "b920b44e.predictive-hpa.io"),
 	}
 	return nil
 }
