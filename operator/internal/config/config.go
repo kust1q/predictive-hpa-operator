@@ -5,6 +5,7 @@ import (
 	"strconv"
 )
 
+// Config defines the application configuration.
 type Config struct {
 	MetricsAddr          string
 	ProbeAddr            string
@@ -14,6 +15,7 @@ type Config struct {
 
 var cfg *Config
 
+// InitConfig initializes the global configuration from environment variables.
 func InitConfig() error {
 	cfg = &Config{
 		MetricsAddr:          getEnv("METRICS_ADDR", ":8080"),
@@ -24,6 +26,7 @@ func InitConfig() error {
 	return nil
 }
 
+// Get returns the global configuration.
 func Get() *Config {
 	return cfg
 }

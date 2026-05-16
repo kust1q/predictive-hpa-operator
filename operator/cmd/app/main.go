@@ -34,13 +34,11 @@ func main() {
 	logrus.SetOutput(os.Stdout)
 	ctrl.SetLogger(zap.New(zap.UseDevMode(true)))
 
-	// --- Configs ---
 	if err := config.InitConfig(); err != nil {
 		logrus.WithError(err).Fatal("error initializing config")
 	}
 	cfg := config.Get()
 
-	// --- Infrastructure ---
 	logrus.Info("Starting Predictive HPA Operator")
 
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
@@ -56,7 +54,6 @@ func main() {
 		logrus.WithError(err).Fatal("unable to start manager")
 	}
 
-	// --- Connection Logic ---
 	if err := (&controller.PredictiveHPAReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
@@ -71,7 +68,6 @@ func main() {
 		logrus.WithError(err).Fatal("unable to set up ready check")
 	}
 
-	// Graceful shutdown setup (controller-runtime handles this, but we can be explicit)
 	ctx := ctrl.SetupSignalHandler()
 
 	go func() {
