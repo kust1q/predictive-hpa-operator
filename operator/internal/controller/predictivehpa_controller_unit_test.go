@@ -15,7 +15,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	"github.com/kust1q/predictive-hpa-operator/api/v1"
+	v1 "github.com/kust1q/predictive-hpa-operator/api/v1"
 	pb "github.com/kust1q/predictive-hpa-operator/api/v1/predictor"
 )
 
