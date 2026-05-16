@@ -24,14 +24,14 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fpredictor.proto\x12\tpredictor\"-\n\tDataPoint\x12\x11\n\ttimestamp\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x01\"`\n\x11PredictionRequest\x12)\n\x0b\x64\x61ta_points\x18\x01 \x03(\x0b\x32\x14.predictor.DataPoint\x12 \n\x18\x66orecast_horizon_seconds\x18\x02 \x01(\x05\"0\n\x12PredictionResponse\x12\x1a\n\x12predicted_replicas\x18\x01 \x01(\x05\x32U\n\tPredictor\x12H\n\x07Predict\x12\x1c.predictor.PredictionRequest\x1a\x1d.predictor.PredictionResponse\"\x00\x42\x42Z@github.com/kust1q/predictive-hpa-operator/api/v1alpha1/predictorb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fpredictor.proto\x12\tpredictor\"-\n\tDataPoint\x12\x11\n\ttimestamp\x18\x01 \x01(\x03\x12\r\n\x05value\x18\x02 \x01(\x01\"`\n\x11PredictionRequest\x12)\n\x0b\x64\x61ta_points\x18\x01 \x03(\x0b\x32\x14.predictor.DataPoint\x12 \n\x18\x66orecast_horizon_seconds\x18\x02 \x01(\x05\"0\n\x12PredictionResponse\x12\x1a\n\x12predicted_replicas\x18\x01 \x01(\x05\x32U\n\tPredictor\x12H\n\x07Predict\x12\x1c.predictor.PredictionRequest\x1a\x1d.predictor.PredictionResponse\"\x00\x42<Z:github.com/kust1q/predictive-hpa-operator/api/v1/predictorb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'predictor_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
-  _globals['DESCRIPTOR']._serialized_options = b'Z@github.com/kust1q/predictive-hpa-operator/api/v1alpha1/predictor'
+  _globals['DESCRIPTOR']._serialized_options = b'Z:github.com/kust1q/predictive-hpa-operator/api/v1/predictor'
   _globals['_DATAPOINT']._serialized_start=30
   _globals['_DATAPOINT']._serialized_end=75
   _globals['_PREDICTIONREQUEST']._serialized_start=77

@@ -34,7 +34,7 @@ predictive-hpa-operator/
 │   └── predictor.proto            #   Predictor service contract
 │
 ├── operator/                      # Go Kubernetes Operator
-│   ├── api/v1alpha1/              #   CRD definitions and generated Go gRPC code
+│   ├── api/v1/              #   CRD definitions and generated Go gRPC code
 │   ├── cmd/app/                   #   Entry point
 │   │   └── main.go
 │   ├── internal/
@@ -106,7 +106,7 @@ cd .. && kubectl apply -k k8s/default
 ```
 3. Apply a sample configuration:
 ```bash
-kubectl apply -f k8s/samples/autoscaling_v1alpha1_predictivehpa.yaml
+kubectl apply -f k8s/samples/autoscaling_v1_predictivehpa.yaml
 ```
 
 ## License

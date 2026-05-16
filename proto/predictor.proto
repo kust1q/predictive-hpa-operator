@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package predictor;
 
-option go_package = "github.com/kust1q/predictive-hpa-operator/api/v1alpha1/predictor";
+option go_package = "github.com/kust1q/predictive-hpa-operator/api/v1/predictor";
 
 service Predictor {
   rpc Predict (PredictionRequest) returns (PredictionResponse) {}

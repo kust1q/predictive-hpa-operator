@@ -1,0 +1,9 @@
+# Binaries
+bin/
+manager
+
+# Test artifacts
+cover.out
+
+# envtest binaries
+bin/k8s/

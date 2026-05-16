@@ -184,7 +184,7 @@ const file_proto_predictor_proto_rawDesc = "" +
 	"\x12PredictionResponse\x12-\n" +
 	"\x12predicted_replicas\x18\x01 \x01(\x05R\x11predictedReplicas2U\n" +
 	"\tPredictor\x12H\n" +
-	"\aPredict\x12\x1c.predictor.PredictionRequest\x1a\x1d.predictor.PredictionResponse\"\x00BBZ@github.com/kust1q/predictive-hpa-operator/api/v1alpha1/predictorb\x06proto3"
+	"\aPredict\x12\x1c.predictor.PredictionRequest\x1a\x1d.predictor.PredictionResponse\"\x00B<Z:github.com/kust1q/predictive-hpa-operator/api/v1/predictorb\x06proto3"
 
 var (
 	file_proto_predictor_proto_rawDescOnce sync.Once

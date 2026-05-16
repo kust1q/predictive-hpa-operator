@@ -14,7 +14,7 @@ spec:
     singular: predictivehpa
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - name: v1
     schema:
       openAPIV3Schema:
         description: PredictiveHPA is the Schema for the predictivehpas API.

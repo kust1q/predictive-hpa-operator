@@ -1,6 +1,6 @@
 # If you prefer the allow list template instead of the deny list, see community template:
 # https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
-#
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -33,23 +33,18 @@ go.work.sum
 *.swp
 *.swo
 
-# Kubebuilder / Go Operator
+# Kubebuilder / Operator (Handled in sub-gitignore, but good to have safety here)
 bin/
 dist/
-operator/bin/
-operator/dist/
-
-# Python / Predictor
-__pycache__/
-*.py[cod]
-*$py.class
-.pytest_cache/
-venv/
-env/
-.env
-.coverage
-coverage.xml
-htmlcov/
 
 # Logs
 *.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
