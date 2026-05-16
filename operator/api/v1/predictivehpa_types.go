@@ -1,4 +1,4 @@
-package v1alpha1
+package v1
 
 import (
 	autoscalingv1 "k8s.io/api/autoscaling/v1"

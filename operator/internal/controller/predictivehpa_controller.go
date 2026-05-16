@@ -21,7 +21,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 
-	autoscalingv1alpha1 "github.com/kust1q/predictive-hpa-operator/api/v1"
+	hpav1 "github.com/kust1q/predictive-hpa-operator/api/v1"
 	pb "github.com/kust1q/predictive-hpa-operator/api/v1/predictor"
 )
 
@@ -32,11 +32,11 @@ const (
 )
 
 type metricsProvider interface {
-	queryPrometheus(ctx context.Context, phpa *autoscalingv1alpha1.PredictiveHPA) ([]*pb.DataPoint, error)
+	queryPrometheus(ctx context.Context, phpa *hpav1.PredictiveHPA) ([]*pb.DataPoint, error)
 }
 
 type predictorClient interface {
-	callPredictor(ctx context.Context, phpa *autoscalingv1alpha1.PredictiveHPA, dataPoints []*pb.DataPoint) (int32, error)
+	callPredictor(ctx context.Context, phpa *hpav1.PredictiveHPA, dataPoints []*pb.DataPoint) (int32, error)
 }
 
 // PredictiveHPAReconciler reconciles a PredictiveHPA object.
@@ -49,7 +49,7 @@ type PredictiveHPAReconciler struct {
 
 type defaultMetricsProvider struct{}
 
-func (d *defaultMetricsProvider) queryPrometheus(ctx context.Context, phpa *autoscalingv1alpha1.PredictiveHPA) ([]*pb.DataPoint, error) {
+func (d *defaultMetricsProvider) queryPrometheus(ctx context.Context, phpa *hpav1.PredictiveHPA) ([]*pb.DataPoint, error) {
 	apiClient, err := api.NewClient(api.Config{
 		Address: phpa.Spec.PrometheusURL,
 	})
@@ -91,7 +91,7 @@ func (d *defaultMetricsProvider) queryPrometheus(ctx context.Context, phpa *auto
 
 type defaultPredictorClient struct{}
 
-func (d *defaultPredictorClient) callPredictor(ctx context.Context, phpa *autoscalingv1alpha1.PredictiveHPA, dataPoints []*pb.DataPoint) (int32, error) {
+func (d *defaultPredictorClient) callPredictor(ctx context.Context, phpa *hpav1.PredictiveHPA, dataPoints []*pb.DataPoint) (int32, error) {
 	conn, err := grpc.NewClient(phpa.Spec.PredictorAddress, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return 0, err
@@ -123,7 +123,7 @@ func (d *defaultPredictorClient) callPredictor(ctx context.Context, phpa *autosc
 func (r *PredictiveHPAReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := logf.FromContext(ctx)
 
-	phpa := &autoscalingv1alpha1.PredictiveHPA{}
+	phpa := &hpav1.PredictiveHPA{}
 	err := r.Get(ctx, req.NamespacedName, phpa)
 	if err != nil {
 		if errors.IsNotFound(err) {
@@ -203,7 +203,7 @@ func (r *PredictiveHPAReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		r.predictorClient = &defaultPredictorClient{}
 	}
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&autoscalingv1alpha1.PredictiveHPA{}).
+		For(&hpav1.PredictiveHPA{}).
 		Named("predictivehpa").
 		Complete(r)
 }

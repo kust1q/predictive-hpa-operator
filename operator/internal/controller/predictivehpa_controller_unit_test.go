@@ -15,7 +15,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
-	autoscalingv1alpha1 "github.com/kust1q/predictive-hpa-operator/api/v1"
+	"github.com/kust1q/predictive-hpa-operator/api/v1"
 	pb "github.com/kust1q/predictive-hpa-operator/api/v1/predictor"
 )
 
@@ -23,7 +23,7 @@ type mockMetricsProvider struct {
 	mock.Mock
 }
 
-func (m *mockMetricsProvider) queryPrometheus(ctx context.Context, phpa *autoscalingv1alpha1.PredictiveHPA) ([]*pb.DataPoint, error) {
+func (m *mockMetricsProvider) queryPrometheus(ctx context.Context, phpa *v1.PredictiveHPA) ([]*pb.DataPoint, error) {
 	args := m.Called(ctx, phpa)
 	return args.Get(0).([]*pb.DataPoint), args.Error(1)
 }
@@ -32,23 +32,23 @@ type mockPredictorClient struct {
 	mock.Mock
 }
 
-func (m *mockPredictorClient) callPredictor(ctx context.Context, phpa *autoscalingv1alpha1.PredictiveHPA, dataPoints []*pb.DataPoint) (int32, error) {
+func (m *mockPredictorClient) callPredictor(ctx context.Context, phpa *v1.PredictiveHPA, dataPoints []*pb.DataPoint) (int32, error) {
 	args := m.Called(ctx, phpa, dataPoints)
 	return args.Get(0).(int32), args.Error(1)
 }
 
 func TestPredictiveHPAReconciler_Reconcile(t *testing.T) {
 	scheme := runtime.NewScheme()
-	_ = autoscalingv1alpha1.AddToScheme(scheme)
+	_ = v1.AddToScheme(scheme)
 	_ = appsv1.AddToScheme(scheme)
 	_ = autoscalingv1.AddToScheme(scheme)
 
-	phpa := &autoscalingv1alpha1.PredictiveHPA{
+	phpa := &v1.PredictiveHPA{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "test-phpa",
 			Namespace: "default",
 		},
-		Spec: autoscalingv1alpha1.PredictiveHPASpec{
+		Spec: v1.PredictiveHPASpec{
 			ScaleTargetRef: autoscalingv1.CrossVersionObjectReference{
 				Kind:       "Deployment",
 				Name:       "test-deploy",
@@ -111,7 +111,7 @@ func TestPredictiveHPAReconciler_Reconcile(t *testing.T) {
 	// assert.Equal(t, int32(3), *updatedDeploy.Spec.Replicas) // Note: fake client might not handle /scale subresource update logic automatically in some versions, but let's check
 
 	// Check PHPA status
-	updatedPHPA := &autoscalingv1alpha1.PredictiveHPA{}
+	updatedPHPA := &v1.PredictiveHPA{}
 	err = fakeClient.Get(context.Background(), req.NamespacedName, updatedPHPA)
 	assert.NoError(t, err)
 	assert.Equal(t, int32(3), *updatedPHPA.Status.LastPrediction)
@@ -119,16 +119,16 @@ func TestPredictiveHPAReconciler_Reconcile(t *testing.T) {
 
 func TestPredictiveHPAReconciler_Reconcile_Errors(t *testing.T) {
 	scheme := runtime.NewScheme()
-	_ = autoscalingv1alpha1.AddToScheme(scheme)
+	_ = v1.AddToScheme(scheme)
 	_ = appsv1.AddToScheme(scheme)
 	_ = autoscalingv1.AddToScheme(scheme)
 
-	phpa := &autoscalingv1alpha1.PredictiveHPA{
+	phpa := &v1.PredictiveHPA{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "test-phpa",
 			Namespace: "default",
 		},
-		Spec: autoscalingv1alpha1.PredictiveHPASpec{
+		Spec: v1.PredictiveHPASpec{
 			ScaleTargetRef: autoscalingv1.CrossVersionObjectReference{
 				Kind:       "Deployment",
 				Name:       "test-deploy",

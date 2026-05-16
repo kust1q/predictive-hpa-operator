@@ -11,7 +11,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	autoscalingv1alpha1 "github.com/kust1q/predictive-hpa-operator/api/v1"
+	"github.com/kust1q/predictive-hpa-operator/api/v1"
 )
 
 var _ = Describe("PredictiveHPA Controller", func() {
@@ -24,18 +24,18 @@ var _ = Describe("PredictiveHPA Controller", func() {
 			Name:      resourceName,
 			Namespace: "default",
 		}
-		predictivehpa := &autoscalingv1alpha1.PredictiveHPA{}
+		predictivehpa := &v1.PredictiveHPA{}
 
 		BeforeEach(func() {
 			By("creating the custom resource for the Kind PredictiveHPA")
 			err := k8sClient.Get(ctx, typeNamespacedName, predictivehpa)
 			if err != nil && errors.IsNotFound(err) {
-				resource := &autoscalingv1alpha1.PredictiveHPA{
+				resource := &v1.PredictiveHPA{
 					ObjectMeta: metav1.ObjectMeta{
 						Name:      resourceName,
 						Namespace: "default",
 					},
-					Spec: autoscalingv1alpha1.PredictiveHPASpec{
+					Spec: v1.PredictiveHPASpec{
 						MaxReplicas:      5,
 						MetricsQuery:     "mock_query",
 						PrometheusURL:    "http://mock-prometheus",
@@ -48,7 +48,7 @@ var _ = Describe("PredictiveHPA Controller", func() {
 		})
 
 		AfterEach(func() {
-			resource := &autoscalingv1alpha1.PredictiveHPA{}
+			resource := &v1.PredictiveHPA{}
 			err := k8sClient.Get(ctx, typeNamespacedName, resource)
 			Expect(err).NotTo(HaveOccurred())
 

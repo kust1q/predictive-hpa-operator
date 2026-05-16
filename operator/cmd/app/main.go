@@ -15,7 +15,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 
-	autoscalingv1alpha1 "github.com/kust1q/predictive-hpa-operator/api/v1"
+	v1 "github.com/kust1q/predictive-hpa-operator/api/v1"
 	"github.com/kust1q/predictive-hpa-operator/internal/config"
 	"github.com/kust1q/predictive-hpa-operator/internal/controller"
 )
@@ -26,7 +26,7 @@ var (
 
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
-	utilruntime.Must(autoscalingv1alpha1.AddToScheme(scheme))
+	utilruntime.Must(v1.AddToScheme(scheme))
 }
 
 func main() {
