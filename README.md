@@ -8,6 +8,7 @@ A smart Kubernetes controller that proactively scales application pods based on 
 [![Prometheus](https://img.shields.io/badge/-Prometheus-464646?style=flat-square&logo=prometheus)](https://prometheus.io/)
 [![gRPC](https://img.shields.io/badge/-gRPC-464646?style=flat-square&logo=grpc)](https://grpc.io/)
 [![Docker](https://img.shields.io/badge/-Docker-464646?style=flat-square&logo=docker)](https://www.docker.com/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ## Tech Stack
 
