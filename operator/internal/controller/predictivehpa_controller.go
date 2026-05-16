@@ -21,8 +21,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 
-	autoscalingv1alpha1 "github.com/kust1q/predictive-hpa-operator/api/v1alpha1"
-	pb "github.com/kust1q/predictive-hpa-operator/api/v1alpha1/predictor"
+	autoscalingv1alpha1 "github.com/kust1q/predictive-hpa-operator/api/v1"
+	pb "github.com/kust1q/predictive-hpa-operator/api/v1/predictor"
 )
 
 const (

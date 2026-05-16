@@ -15,7 +15,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 
-	autoscalingv1alpha1 "github.com/kust1q/predictive-hpa-operator/api/v1alpha1"
+	autoscalingv1alpha1 "github.com/kust1q/predictive-hpa-operator/api/v1"
 	"github.com/kust1q/predictive-hpa-operator/internal/config"
 	"github.com/kust1q/predictive-hpa-operator/internal/controller"
 )

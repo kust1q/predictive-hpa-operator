@@ -11,7 +11,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	autoscalingv1alpha1 "github.com/kust1q/predictive-hpa-operator/api/v1alpha1"
+	autoscalingv1alpha1 "github.com/kust1q/predictive-hpa-operator/api/v1"
 )
 
 var _ = Describe("PredictiveHPA Controller", func() {
